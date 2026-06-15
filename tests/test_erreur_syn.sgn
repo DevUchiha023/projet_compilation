@@ -1,0 +1,43 @@
+-- =============================================================
+-- test_erreur_syn.sgn - Fichier de test avec erreurs syntaxiques
+-- Projet : Système de Gestion des Notes (SGN)
+-- Date   : Juin 2026
+--
+-- Description : Ce fichier contient des erreurs de structure
+-- pour tester la récupération d'erreurs de l'analyseur
+-- syntaxique (parser.y).
+-- =============================================================
+
+ANNEE "2025-2026"
+
+NIVEAU L1 {
+  -- Erreur syntaxique : champs dans le mauvais ordre (PRENOM avant NOM)
+  ETUDIANT {
+    MATRICULE : "L1-2025-001"
+    PRENOM : "Mamadou"
+    NOM : "DIALLO Mamadou"
+    SEMESTRE S1 {
+      MODULE "Algorithmique" COEF 3 NOTE 14.5
+    }
+  }
+
+  -- Erreur syntaxique : accolade manquante pour le semestre
+  ETUDIANT {
+    MATRICULE : "L1-2025-002"
+    NOM : "NDIAYE Fatou"
+    PRENOM : "Fatou"
+    SEMESTRE S1
+      MODULE "Algorithmique" COEF 3 NOTE 9.5
+    }
+  }
+
+  -- Erreur syntaxique : mot-clé COEF manquant
+  ETUDIANT {
+    MATRICULE : "L1-2025-003"
+    NOM : "BA Ousmane"
+    PRENOM : "Ousmane"
+    SEMESTRE S2 {
+      MODULE "Programmation C" 3 NOTE 13.5
+    }
+  }
+}

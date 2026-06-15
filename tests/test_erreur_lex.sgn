@@ -1,0 +1,12 @@
+-- Test erreur lexicale : caractere @ invalide
+ANNEE "2025-2026"
+NIVEAU L1 {
+  ETUDIANT {
+    MATRICULE : "L1-001"
+    NOM : "TEST"
+    PRENOM : "Test"
+    SEMESTRE S1 {
+      MODULE "Maths" COEF 3 NOTE @14.5
+    }
+  }
+}

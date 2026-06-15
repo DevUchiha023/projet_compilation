@@ -1,0 +1,469 @@
+Grammar
+
+    0 $accept: programme $end
+
+    1 programme: TOK_ANNEE TOK_STRING liste_niveaux
+
+    2 liste_niveaux: niveau
+    3              | liste_niveaux niveau
+
+    4 $@1: ε
+
+    5 niveau: TOK_NIVEAU TOK_ID_NIVEAU $@1 '{' liste_etudiants '}'
+
+    6 liste_etudiants: etudiant
+    7                | liste_etudiants etudiant
+
+    8 etudiant: TOK_ETUDIANT '{' TOK_MATRICULE ':' TOK_STRING TOK_NOM ':' TOK_STRING TOK_PRENOM ':' TOK_STRING liste_semestres '}'
+    9         | TOK_ETUDIANT '{' error '}'
+
+   10 liste_semestres: semestre
+   11                | liste_semestres semestre
+
+   12 semestre: TOK_SEMESTRE TOK_ID_SEM '{' liste_modules '}'
+
+   13 liste_modules: module
+   14              | liste_modules module
+
+   15 module: TOK_MODULE TOK_STRING TOK_COEF TOK_ENTIER TOK_NOTE valeur_note
+
+   16 valeur_note: TOK_REEL
+   17            | TOK_ENTIER
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    ':' (58) 8
+    '{' (123) 5 8 9 12
+    '}' (125) 5 8 9 12
+    error (256) 9
+    TOK_ANNEE (258) 1
+    TOK_NIVEAU (259) 5
+    TOK_ETUDIANT (260) 8 9
+    TOK_MATRICULE (261) 8
+    TOK_NOM (262) 8
+    TOK_PRENOM (263) 8
+    TOK_SEMESTRE (264) 12
+    TOK_MODULE (265) 15
+    TOK_COEF (266) 15
+    TOK_NOTE (267) 15
+    TOK_ID_NIVEAU <str> (268) 5
+    TOK_ID_SEM <str> (269) 12
+    TOK_STRING <str> (270) 1 8 15
+    TOK_ENTIER <entier> (271) 15 17
+    TOK_REEL <reel> (272) 16
+
+
+Nonterminals, with rules where they appear
+
+    $accept (21)
+        on left: 0
+    programme <programme> (22)
+        on left: 1
+        on right: 0
+    liste_niveaux <niveau> (23)
+        on left: 2 3
+        on right: 1 3
+    niveau <niveau> (24)
+        on left: 5
+        on right: 2 3
+    $@1 (25)
+        on left: 4
+        on right: 5
+    liste_etudiants <etudiant> (26)
+        on left: 6 7
+        on right: 5 7
+    etudiant <etudiant> (27)
+        on left: 8 9
+        on right: 6 7
+    liste_semestres <semestre> (28)
+        on left: 10 11
+        on right: 8 11
+    semestre <semestre> (29)
+        on left: 12
+        on right: 10 11
+    liste_modules <module> (30)
+        on left: 13 14
+        on right: 12 14
+    module <module> (31)
+        on left: 15
+        on right: 13 14
+    valeur_note <reel> (32)
+        on left: 16 17
+        on right: 15
+
+
+State 0
+
+    0 $accept: • programme $end
+
+    TOK_ANNEE  shift, and go to state 1
+
+    programme  go to state 2
+
+
+State 1
+
+    1 programme: TOK_ANNEE • TOK_STRING liste_niveaux
+
+    TOK_STRING  shift, and go to state 3
+
+
+State 2
+
+    0 $accept: programme • $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    1 programme: TOK_ANNEE TOK_STRING • liste_niveaux
+
+    TOK_NIVEAU  shift, and go to state 5
+
+    liste_niveaux  go to state 6
+    niveau         go to state 7
+
+
+State 4
+
+    0 $accept: programme $end •
+
+    $default  accept
+
+
+State 5
+
+    5 niveau: TOK_NIVEAU • TOK_ID_NIVEAU $@1 '{' liste_etudiants '}'
+
+    TOK_ID_NIVEAU  shift, and go to state 8
+
+
+State 6
+
+    1 programme: TOK_ANNEE TOK_STRING liste_niveaux •
+    3 liste_niveaux: liste_niveaux • niveau
+
+    TOK_NIVEAU  shift, and go to state 5
+
+    $default  reduce using rule 1 (programme)
+
+    niveau  go to state 9
+
+
+State 7
+
+    2 liste_niveaux: niveau •
+
+    $default  reduce using rule 2 (liste_niveaux)
+
+
+State 8
+
+    5 niveau: TOK_NIVEAU TOK_ID_NIVEAU • $@1 '{' liste_etudiants '}'
+
+    $default  reduce using rule 4 ($@1)
+
+    $@1  go to state 10
+
+
+State 9
+
+    3 liste_niveaux: liste_niveaux niveau •
+
+    $default  reduce using rule 3 (liste_niveaux)
+
+
+State 10
+
+    5 niveau: TOK_NIVEAU TOK_ID_NIVEAU $@1 • '{' liste_etudiants '}'
+
+    '{'  shift, and go to state 11
+
+
+State 11
+
+    5 niveau: TOK_NIVEAU TOK_ID_NIVEAU $@1 '{' • liste_etudiants '}'
+
+    TOK_ETUDIANT  shift, and go to state 12
+
+    liste_etudiants  go to state 13
+    etudiant         go to state 14
+
+
+State 12
+
+    8 etudiant: TOK_ETUDIANT • '{' TOK_MATRICULE ':' TOK_STRING TOK_NOM ':' TOK_STRING TOK_PRENOM ':' TOK_STRING liste_semestres '}'
+    9         | TOK_ETUDIANT • '{' error '}'
+
+    '{'  shift, and go to state 15
+
+
+State 13
+
+    5 niveau: TOK_NIVEAU TOK_ID_NIVEAU $@1 '{' liste_etudiants • '}'
+    7 liste_etudiants: liste_etudiants • etudiant
+
+    TOK_ETUDIANT  shift, and go to state 12
+    '}'           shift, and go to state 16
+
+    etudiant  go to state 17
+
+
+State 14
+
+    6 liste_etudiants: etudiant •
+
+    $default  reduce using rule 6 (liste_etudiants)
+
+
+State 15
+
+    8 etudiant: TOK_ETUDIANT '{' • TOK_MATRICULE ':' TOK_STRING TOK_NOM ':' TOK_STRING TOK_PRENOM ':' TOK_STRING liste_semestres '}'
+    9         | TOK_ETUDIANT '{' • error '}'
+
+    error          shift, and go to state 18
+    TOK_MATRICULE  shift, and go to state 19
+
+
+State 16
+
+    5 niveau: TOK_NIVEAU TOK_ID_NIVEAU $@1 '{' liste_etudiants '}' •
+
+    $default  reduce using rule 5 (niveau)
+
+
+State 17
+
+    7 liste_etudiants: liste_etudiants etudiant •
+
+    $default  reduce using rule 7 (liste_etudiants)
+
+
+State 18
+
+    9 etudiant: TOK_ETUDIANT '{' error • '}'
+
+    '}'  shift, and go to state 20
+
+
+State 19
+
+    8 etudiant: TOK_ETUDIANT '{' TOK_MATRICULE • ':' TOK_STRING TOK_NOM ':' TOK_STRING TOK_PRENOM ':' TOK_STRING liste_semestres '}'
+
+    ':'  shift, and go to state 21
+
+
+State 20
+
+    9 etudiant: TOK_ETUDIANT '{' error '}' •
+
+    $default  reduce using rule 9 (etudiant)
+
+
+State 21
+
+    8 etudiant: TOK_ETUDIANT '{' TOK_MATRICULE ':' • TOK_STRING TOK_NOM ':' TOK_STRING TOK_PRENOM ':' TOK_STRING liste_semestres '}'
+
+    TOK_STRING  shift, and go to state 22
+
+
+State 22
+
+    8 etudiant: TOK_ETUDIANT '{' TOK_MATRICULE ':' TOK_STRING • TOK_NOM ':' TOK_STRING TOK_PRENOM ':' TOK_STRING liste_semestres '}'
+
+    TOK_NOM  shift, and go to state 23
+
+
+State 23
+
+    8 etudiant: TOK_ETUDIANT '{' TOK_MATRICULE ':' TOK_STRING TOK_NOM • ':' TOK_STRING TOK_PRENOM ':' TOK_STRING liste_semestres '}'
+
+    ':'  shift, and go to state 24
+
+
+State 24
+
+    8 etudiant: TOK_ETUDIANT '{' TOK_MATRICULE ':' TOK_STRING TOK_NOM ':' • TOK_STRING TOK_PRENOM ':' TOK_STRING liste_semestres '}'
+
+    TOK_STRING  shift, and go to state 25
+
+
+State 25
+
+    8 etudiant: TOK_ETUDIANT '{' TOK_MATRICULE ':' TOK_STRING TOK_NOM ':' TOK_STRING • TOK_PRENOM ':' TOK_STRING liste_semestres '}'
+
+    TOK_PRENOM  shift, and go to state 26
+
+
+State 26
+
+    8 etudiant: TOK_ETUDIANT '{' TOK_MATRICULE ':' TOK_STRING TOK_NOM ':' TOK_STRING TOK_PRENOM • ':' TOK_STRING liste_semestres '}'
+
+    ':'  shift, and go to state 27
+
+
+State 27
+
+    8 etudiant: TOK_ETUDIANT '{' TOK_MATRICULE ':' TOK_STRING TOK_NOM ':' TOK_STRING TOK_PRENOM ':' • TOK_STRING liste_semestres '}'
+
+    TOK_STRING  shift, and go to state 28
+
+
+State 28
+
+    8 etudiant: TOK_ETUDIANT '{' TOK_MATRICULE ':' TOK_STRING TOK_NOM ':' TOK_STRING TOK_PRENOM ':' TOK_STRING • liste_semestres '}'
+
+    TOK_SEMESTRE  shift, and go to state 29
+
+    liste_semestres  go to state 30
+    semestre         go to state 31
+
+
+State 29
+
+   12 semestre: TOK_SEMESTRE • TOK_ID_SEM '{' liste_modules '}'
+
+    TOK_ID_SEM  shift, and go to state 32
+
+
+State 30
+
+    8 etudiant: TOK_ETUDIANT '{' TOK_MATRICULE ':' TOK_STRING TOK_NOM ':' TOK_STRING TOK_PRENOM ':' TOK_STRING liste_semestres • '}'
+   11 liste_semestres: liste_semestres • semestre
+
+    TOK_SEMESTRE  shift, and go to state 29
+    '}'           shift, and go to state 33
+
+    semestre  go to state 34
+
+
+State 31
+
+   10 liste_semestres: semestre •
+
+    $default  reduce using rule 10 (liste_semestres)
+
+
+State 32
+
+   12 semestre: TOK_SEMESTRE TOK_ID_SEM • '{' liste_modules '}'
+
+    '{'  shift, and go to state 35
+
+
+State 33
+
+    8 etudiant: TOK_ETUDIANT '{' TOK_MATRICULE ':' TOK_STRING TOK_NOM ':' TOK_STRING TOK_PRENOM ':' TOK_STRING liste_semestres '}' •
+
+    $default  reduce using rule 8 (etudiant)
+
+
+State 34
+
+   11 liste_semestres: liste_semestres semestre •
+
+    $default  reduce using rule 11 (liste_semestres)
+
+
+State 35
+
+   12 semestre: TOK_SEMESTRE TOK_ID_SEM '{' • liste_modules '}'
+
+    TOK_MODULE  shift, and go to state 36
+
+    liste_modules  go to state 37
+    module         go to state 38
+
+
+State 36
+
+   15 module: TOK_MODULE • TOK_STRING TOK_COEF TOK_ENTIER TOK_NOTE valeur_note
+
+    TOK_STRING  shift, and go to state 39
+
+
+State 37
+
+   12 semestre: TOK_SEMESTRE TOK_ID_SEM '{' liste_modules • '}'
+   14 liste_modules: liste_modules • module
+
+    TOK_MODULE  shift, and go to state 36
+    '}'         shift, and go to state 40
+
+    module  go to state 41
+
+
+State 38
+
+   13 liste_modules: module •
+
+    $default  reduce using rule 13 (liste_modules)
+
+
+State 39
+
+   15 module: TOK_MODULE TOK_STRING • TOK_COEF TOK_ENTIER TOK_NOTE valeur_note
+
+    TOK_COEF  shift, and go to state 42
+
+
+State 40
+
+   12 semestre: TOK_SEMESTRE TOK_ID_SEM '{' liste_modules '}' •
+
+    $default  reduce using rule 12 (semestre)
+
+
+State 41
+
+   14 liste_modules: liste_modules module •
+
+    $default  reduce using rule 14 (liste_modules)
+
+
+State 42
+
+   15 module: TOK_MODULE TOK_STRING TOK_COEF • TOK_ENTIER TOK_NOTE valeur_note
+
+    TOK_ENTIER  shift, and go to state 43
+
+
+State 43
+
+   15 module: TOK_MODULE TOK_STRING TOK_COEF TOK_ENTIER • TOK_NOTE valeur_note
+
+    TOK_NOTE  shift, and go to state 44
+
+
+State 44
+
+   15 module: TOK_MODULE TOK_STRING TOK_COEF TOK_ENTIER TOK_NOTE • valeur_note
+
+    TOK_ENTIER  shift, and go to state 45
+    TOK_REEL    shift, and go to state 46
+
+    valeur_note  go to state 47
+
+
+State 45
+
+   17 valeur_note: TOK_ENTIER •
+
+    $default  reduce using rule 17 (valeur_note)
+
+
+State 46
+
+   16 valeur_note: TOK_REEL •
+
+    $default  reduce using rule 16 (valeur_note)
+
+
+State 47
+
+   15 module: TOK_MODULE TOK_STRING TOK_COEF TOK_ENTIER TOK_NOTE valeur_note •
+
+    $default  reduce using rule 15 (module)

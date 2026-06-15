@@ -1,0 +1,12 @@
+-- Test erreur semantique : note hors intervalle
+ANNEE "2025-2026"
+NIVEAU L1 {
+  ETUDIANT {
+    MATRICULE : "L1-002"
+    NOM : "ERREUR"
+    PRENOM : "Test"
+    SEMESTRE S1 {
+      MODULE "Maths" COEF 3 NOTE 25.0
+    }
+  }
+}

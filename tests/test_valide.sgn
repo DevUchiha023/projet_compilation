@@ -1,0 +1,47 @@
+-- Fichier notes : Annee academique 2025-2026
+ANNEE "2025-2026"
+
+NIVEAU L1 {
+  ETUDIANT {
+    MATRICULE : "L1-2025-001"
+    NOM : "DIALLO Mamadou"
+    PRENOM : "Mamadou"
+    SEMESTRE S1 {
+      MODULE "Algorithmique" COEF 3 NOTE 14.5
+      MODULE "Mathematiques" COEF 4 NOTE 12.0
+      MODULE "Architecture" COEF 2 NOTE 16.0
+      MODULE "Anglais" COEF 1 NOTE 15.0
+    }
+    SEMESTRE S2 {
+      MODULE "Programmation C" COEF 3 NOTE 13.5
+      MODULE "Logique" COEF 3 NOTE 11.0
+      MODULE "Reseaux" COEF 2 NOTE 17.0
+    }
+  }
+  ETUDIANT {
+    MATRICULE : "L1-2025-002"
+    NOM : "NDIAYE Fatou"
+    PRENOM : "Fatou"
+    SEMESTRE S1 {
+      MODULE "Algorithmique" COEF 3 NOTE 9.5
+      MODULE "Mathematiques" COEF 4 NOTE 8.0
+    }
+  }
+}
+
+NIVEAU L2 {
+  ETUDIANT {
+    MATRICULE : "L2-2024-010"
+    NOM : "SALL Ibrahim"
+    PRENOM : "Ibrahim"
+    SEMESTRE S3 {
+      MODULE "Bases de Donnees" COEF 3 NOTE 15.0
+      MODULE "POO Java" COEF 4 NOTE 13.0
+      MODULE "Systemes" COEF 3 NOTE 14.0
+    }
+    SEMESTRE S4 {
+      MODULE "Compilation" COEF 3 NOTE 16.5
+      MODULE "Reseaux Avances" COEF 3 NOTE 12.5
+    }
+  }
+}
